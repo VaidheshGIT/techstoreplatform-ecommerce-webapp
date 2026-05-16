@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+  --bg-color: #0b0c10;
+  --text-primary: #ffffff;
+  --text-secondary: #c5c6c7;
+  --accent-color: #66fcf1;
+  --accent-secondary: #45a29e;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  background-image: radial-gradient(circle at top right, rgba(102, 252, 241, 0.1), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(69, 162, 158, 0.1), transparent 40%);
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 252, 241, 0.4);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  letter-spacing: -0.5px;
+}

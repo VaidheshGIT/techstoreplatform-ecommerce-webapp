@@ -1,0 +1,88 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="glass-panel main-header">
+    <div class="logo">
+      <span class="icon">🚀</span>
+      <h1>TechStore Platform</h1>
+    </div>
+    <div class="badge">Microservices Architecture</div>
+  </header>
+
+  <main class="content-grid">
+    <!-- Products Section -->
+    <section class="products-section">
+      <h2>Featured Products</h2>
+      
+      <div class="product-grid">
+        @for (product of products; track product.id) {
+          <div class="product-card glass-panel">
+            <div class="product-image-placeholder">
+              <span class="placeholder-icon">📦</span>
+            </div>
+            <div class="product-info">
+              <h3>{{ product.name }}</h3>
+              <p class="desc">{{ product.description }}</p>
+              <div class="product-meta">
+                <span class="price">${{ product.price }}</span>
+                <span class="stock" [class.out-of-stock]="product.stockQuantity === 0">
+                  {{ product.stockQuantity > 0 ? product.stockQuantity + ' in stock' : 'Out of Stock' }}
+                </span>
+              </div>
+              <button class="primary" 
+                      [disabled]="product.stockQuantity === 0"
+                      (click)="addToCart(product)">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        }
+        @empty {
+          <div class="empty-state glass-panel">
+            <p>No products available yet. Run the backend services!</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <aside class="cart-section glass-panel">
+      <h2>Your Cart</h2>
+      
+      @if (cart.length > 0) {
+        <div class="cart-items">
+          @for (item of cart; track item.product.id) {
+            <div class="cart-item">
+              <div class="item-details">
+                <span class="item-name">{{ item.product.name }}</span>
+                <span class="item-qty">x{{ item.quantity }}</span>
+              </div>
+              <span class="item-price">${{ item.product.price * item.quantity }}</span>
+            </div>
+          }
+        </div>
+        
+        <div class="cart-summary">
+          <div class="total">
+            <span>Total</span>
+            <span>${{ cartTotal }}</span>
+          </div>
+          <button class="primary full-width" (click)="placeOrder()">
+            Place Order
+          </button>
+        </div>
+      } @else {
+        <div class="empty-cart">
+          <p>Your cart is empty.</p>
+        </div>
+      }
+    </aside>
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="toast glass-panel" [class.show]="showNotification">
+    <div class="toast-content">
+      <span class="toast-icon">✅</span>
+      <p>{{ notificationMessage }}</p>
+    </div>
+  </div>
+</div>
