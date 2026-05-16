@@ -21,23 +21,19 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Start Database and RabbitMQ (Docker Compose)
+    - name: Start Database and RabbitMQ
       run: |
-        docker-compose up -d postgres-product postgres-order rabbitmq
+        docker compose up -d postgres-product postgres-order rabbitmq
         echo "Waiting for services to be ready..."
         sleep 15
 
     - name: Build and Test Spring Boot Services
       run: mvn clean package -DskipTests
-      # Note: We are using -DskipTests here for the CV project to ensure rapid successful builds. 
-      # If you write robust unit tests later, you can remove -DskipTests.
 
     - name: Set up Node.js for Angular
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: 'angular-frontend/package-lock.json'
 
     - name: Build Angular Frontend
       working-directory: ./angular-frontend
@@ -46,4 +42,5 @@ jobs:
         npm run build --configuration=production
 
     - name: Stop Docker Services
-      run: docker-compose down
+      if: always()
+      run: docker compose down
